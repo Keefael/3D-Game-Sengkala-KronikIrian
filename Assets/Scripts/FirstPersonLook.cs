@@ -1,10 +1,11 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Ganti namespace input
+using UnityEngine.InputSystem;
 
 public class FirstPersonLook : MonoBehaviour
 {
     [Header("Settings")]
-    public float mouseSensitivity = 2.0f;
+    // Naikkan angka ini jika masih terasa lambat (misal: 0.5f atau 1.0f)
+    public float mouseSensitivity = 0.8f; 
     public Transform playerBody;
 
     private float xRotation = 0f;
@@ -14,8 +15,6 @@ public class FirstPersonLook : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        
-        // Ambil referensi Mouse dari Input System
         mouse = Mouse.current;
     }
 
@@ -23,20 +22,21 @@ public class FirstPersonLook : MonoBehaviour
     {
         if (mouse == null) return;
 
-        // Baca delta pergerakan mouse (bukan GetAxis)
         Vector2 delta = mouse.delta.ReadValue();
-        float mouseX = delta.x * mouseSensitivity * Time.deltaTime;
-        float mouseY = delta.y * mouseSensitivity * Time.deltaTime;
+        
+        // HAPUS Time.deltaTime di sini agar responsif
+        float mouseX = delta.x * mouseSensitivity;
+        float mouseY = delta.y * mouseSensitivity;
 
-        // Rotasi Kiri-Kanan
+        // Rotasi Kiri-Kanan (Badan Player)
         if (playerBody != null)
         {
             playerBody.Rotate(Vector3.up * mouseX);
         }
 
-        // Rotasi Atas-Bawah
+        // Rotasi Atas-Bawah (Kamera)
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Batasi agar leher tidak patah
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 }
