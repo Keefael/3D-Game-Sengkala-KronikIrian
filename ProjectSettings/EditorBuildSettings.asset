@@ -6,28 +6,28 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Game Folders/Scenes/Main Menu.unity
     guid: 0f125ed61c9c03e4887dbb8b68acdebb
   - enabled: 1
-    path: Assets/Scenes/SelectLevel.unity
+    path: Assets/Game Folders/Scenes/SelectLevel.unity
     guid: be04c4b7f7c975543a143074e863a3ba
   - enabled: 1
-    path: Assets/Scenes/Level Prolog.unity
+    path: Assets/Game Folders/Scenes/Level Prolog.unity
     guid: 43e7abb172a180f40ab12dc7a099ea49
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Game Folders/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/PuzzleFix.unity
+    path: Assets/Game Folders/Scenes/PuzzleFix.unity
     guid: b935aecf685a6364a92d056c29e57f6b
   - enabled: 1
-    path: Assets/Scenes/Puzzle.unity
+    path: Assets/Game Folders/Scenes/Puzzle.unity
     guid: 10110ad45aa1acc4db32bc424f480467
   - enabled: 1
-    path: Assets/Scenes/Lempar Lembing.unity
+    path: Assets/Game Folders/Scenes/Lempar Lembing.unity
     guid: fd69ac3e84c5aaf4ca0162009564840d
   - enabled: 1
-    path: Assets/Scenes/ujicobascroll.unity
+    path: Assets/Game Folders/Scenes/ujicobascroll.unity
     guid: 3b070db65c2d88741adcead4a08a20d8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
