@@ -1,9 +1,24 @@
 fileFormatVersion: 2
 guid: ba3b32b0a12ff9d469ea4803d4394b96
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DefaultMaterial
+    second: {fileID: 2100000, guid: b67718d3f349a3d4a96f74e3123bfeb2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Laut
+    second: {fileID: 2100000, guid: 734d886bd5e85bd45826e9e1ba25cfc2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PH_Hue
+    second: {fileID: 2100000, guid: fee19156d9685af4bb8e43f48535eec6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -56,6 +71,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

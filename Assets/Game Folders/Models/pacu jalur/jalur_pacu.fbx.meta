@@ -1,9 +1,19 @@
 fileFormatVersion: 2
 guid: 529fbb8411f92e7458817e8bf41819de
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: perahu_pacu_jalur
+    second: {fileID: 2100000, guid: 72efa4c8c04d31249a6d65946ef6f241, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tripo_mat_e980b6d5
+    second: {fileID: 2100000, guid: f82e2e1161465bb469c5997978783dcf, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -288,6 +298,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
