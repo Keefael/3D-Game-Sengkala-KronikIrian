@@ -27,6 +27,7 @@ namespace SengkalaDev
         public void ChangeState(GameState newState)
         {
             if (newState == currentState) return;
+            currentState = newState;
 
             OnChangeStated?.Invoke(newState);
         }          
