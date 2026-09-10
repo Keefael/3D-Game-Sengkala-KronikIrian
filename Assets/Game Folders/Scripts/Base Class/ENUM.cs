@@ -3,6 +3,7 @@ namespace SengkalaDev
     public enum GameState 
     {
         Menu,
+        WorldMap, // <--- TAMBAHKAN INI
         Level,
         IrianPedia,
         Credits,
@@ -12,6 +13,7 @@ namespace SengkalaDev
     public enum PageName 
     {
         Menu,
+        WorldMap, // <--- TAMBAHKAN INI
         Level,
         IrianPedia,
         Credits,

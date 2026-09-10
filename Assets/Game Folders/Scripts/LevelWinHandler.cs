@@ -43,7 +43,7 @@ public class LevelWinHandler : MonoBehaviour
         else if (currentLevelIndex == 3)
         {
             // Selesai Lempar Lembing -> Kembali ke MainMenu
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("Main Menu");
         }
     }
 }

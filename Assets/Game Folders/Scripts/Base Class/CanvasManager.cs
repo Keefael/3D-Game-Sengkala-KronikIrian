@@ -25,14 +25,22 @@ public class CanvasManager : MonoBehaviour
             case GameState.Menu:
                 ChangePage(PageName.Menu);
                 break;
+                
+            case GameState.WorldMap: // <--- TAMBAHKAN INI
+                ChangePage(PageName.WorldMap);
+                break;
+                
             case GameState.IrianPedia:
                 ChangePage(PageName.IrianPedia);
                 break;
+                
             case GameState.Credits:
                 ChangePage(PageName.Credits);
                 break;
+                
             case GameState.Quit:
                 break;
+                
             case GameState.Level:
                 ChangePage(PageName.Level);
                 break;

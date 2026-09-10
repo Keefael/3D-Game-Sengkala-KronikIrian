@@ -43,7 +43,7 @@ public class ClickableCube : MonoBehaviour
     // --- VARIABEL FINISH LINE & UI ---
     [Header("Finish Line & UI Settings")]
     public GameObject winPanel; 
-    public GameObject winButton;    // Tombol khusus saat Menang (bisa GameObject tunggal atau Group/Parent)
+    public GameObject winButton;    // Tombol khusus saat Menang
     public GameObject retryButton;  // Tombol khusus saat Kalah (Retry)
     
     [Header("Bot Settings")]
@@ -132,14 +132,32 @@ public class ClickableCube : MonoBehaviour
             return; 
         }
 
-        // 3. DETEKSI KLIK MOUSE
+        // 3. DETEKSI INPUT (KLIK MOUSE PADA OBJEK ATAU TOMBOL SPACE)
+        bool isInputDetected = false;
+
+        // Opsi A: Klik Kiri Mouse (Harus mengenai objek ini)
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hit.collider.gameObject == this.gameObject) HandleClick();
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    isInputDetected = true;
+                }
             }
+        }
+
+        // Opsi B: Tombol Space (Langsung aktif tanpa perlu raycast)
+        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            isInputDetected = true;
+        }
+
+        // Jalankan aksi jika salah satu input terdeteksi
+        if (isInputDetected)
+        {
+            HandleClick();
         }
 
         // 4. GERAKAN SMOOTH
@@ -192,8 +210,8 @@ public class ClickableCube : MonoBehaviour
         if (!isRaceStarted || isRaceFinished) return; 
 
         if (currentStamina <= 0) return; 
-        currentStamina = Mathf.Clamp(currentStamina - drainPerClick, 0, maxStamina);
         
+        currentStamina = Mathf.Clamp(currentStamina - drainPerClick, 0, maxStamina);
         velocity += -transform.right * thrustForce; 
         
         rowAnimationTimer = 1.0f; 

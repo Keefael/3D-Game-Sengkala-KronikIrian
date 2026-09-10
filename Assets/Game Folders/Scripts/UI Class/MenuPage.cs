@@ -13,9 +13,10 @@ public class MenuPage : Page
     {
         base.Start();
 
-        startButton.onClick.AddListener(() => SengkalaDev.GameManager.Instance.ChangeState(GameState.Level));
+        // UBAH DARI Level JADI WorldMap
+        startButton.onClick.AddListener(() => SengkalaDev.GameManager.Instance.ChangeState(GameState.WorldMap));
         irianPediaButton.onClick.AddListener(() => SengkalaDev.GameManager.Instance.ChangeState(GameState.IrianPedia));
         creditsButton.onClick.AddListener(() => SengkalaDev.GameManager.Instance.ChangeState(GameState.Credits));
-        quitButton.onClick.AddListener(()=> Application.Quit());
+        quitButton.onClick.AddListener(() => Application.Quit());
     }
 }
