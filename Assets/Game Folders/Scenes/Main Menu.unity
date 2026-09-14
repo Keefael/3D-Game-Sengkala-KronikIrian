@@ -289,7 +289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 232, y: -19}
+  m_AnchoredPosition: {x: 232, y: -263}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &54717156
@@ -594,9 +594,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 2
-
-'
+  m_text: BO DAWOSARA RARUKO
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8e3b1f97400717d4a89362df16b5863e, type: 2}
   m_sharedMaterial: {fileID: 2140474, guid: 8e3b1f97400717d4a89362df16b5863e, type: 2}
@@ -623,7 +621,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.85
+  m_fontSize: 20.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -732,7 +730,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Level 1
+  m_text: ' KAIMANA'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8e3b1f97400717d4a89362df16b5863e, type: 2}
   m_sharedMaterial: {fileID: 2140474, guid: 8e3b1f97400717d4a89362df16b5863e, type: 2}
@@ -1067,7 +1065,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -37}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &475617042
@@ -1090,7 +1088,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3594d6b2dfca8c94ea88d72829664346, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a0175d38dd159b34bbd8b81c3cbd5b1a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2008,7 +2006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 576, y: 81}
+  m_AnchoredPosition: {x: 622, y: -320}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &860399446
@@ -3198,7 +3196,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Level 3
+  m_text: AISOKI
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8e3b1f97400717d4a89362df16b5863e, type: 2}
   m_sharedMaterial: {fileID: 2140474, guid: 8e3b1f97400717d4a89362df16b5863e, type: 2}
@@ -3756,7 +3754,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1531621400
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4168,7 +4166,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -135, y: 309}
+  m_AnchoredPosition: {x: -135, y: 22}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1684809879
