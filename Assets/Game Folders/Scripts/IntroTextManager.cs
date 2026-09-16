@@ -1,108 +1,161 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
 using System.Collections;
 
-public class IntroTextManager : MonoBehaviour
+public class IntroImageManager : MonoBehaviour
 {
     [Header("Referensi UI")]
-    [SerializeField] private TextMeshProUGUI introText;
-    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private Image introImage;       
+    [SerializeField] private CanvasGroup canvasGroup; 
+
+    [Header("Sprite Berdasarkan Scene (Assign di Inspector)")]
+    [Tooltip("Masukkan gambar logo/judul untuk Puzzle Kaimana")]
+    [SerializeField] private Sprite spritePuzzle;     
+    [Tooltip("Masukkan gambar logo/judul untuk Bo Dawosara Raruko")]
+    [SerializeField] private Sprite spriteBoDawosara; 
+    [Tooltip("Masukkan gambar logo/judul untuk Aisoki")]
+    [SerializeField] private Sprite spriteAisoki;     
+    [Tooltip("Gambar default jika scene tidak dikenali")]
+    [SerializeField] private Sprite spriteDefault;    
 
     [Header("Pengaturan Waktu (Detik)")]
-    [SerializeField] private float fadeInDuration = 0.5f;
-    [SerializeField] private float stayDuration = 2.0f;
-    [SerializeField] private float fadeOutDuration = 0.5f;
+    [SerializeField] private float fadeInDuration = 0.8f;
+    [SerializeField] private float stayDuration = 2.5f;
+    [SerializeField] private float fadeOutDuration = 0.8f;
 
-    [Header("Opsional: Countdown (isi hanya untuk Level 2)")]
-    [SerializeField] private GameObject countdownObject; // Gunakan GameObject, bukan script spesifik
+    [Header("Efek Visual (Pop-up)")]
+    [Tooltip("Kurve animasi agar gerakan membesar/mengecil terasa halus")]
+    [SerializeField] private AnimationCurve popUpCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [Tooltip("Seberapa besar gambar memantul saat muncul (1.0 = normal, 1.15 = 15% lebih besar)")]
+    [SerializeField] private float popScaleAmount = 1.15f;
+
+    [Header("Audio (Opsional tapi Recommended)")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip appearSound;   
+    [SerializeField] private AudioClip disappearSound;
+
+    [Header("Opsional: Countdown")]
+    [SerializeField] private GameObject countdownObject;
+
+    private Vector3 originalScale;
 
     void Start()
     {
-        SetTeksBerdasarkanScene();
+        // Auto-setup komponen jika lupa dipasang di Inspector
+        if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
         
-        if (canvasGroup == null)
-        {
-            canvasGroup = gameObject.AddComponent<CanvasGroup>();
-        }
+        // 1. SET SPRITE BERDASARKAN SCENE
+        SetSpriteBerdasarkanScene();
+
+        // 2. SETUP AWAL ANIMASI
+        originalScale = transform.localScale;
+        canvasGroup.alpha = 0f;
+        transform.localScale = originalScale * 0.85f; // Mulai dari 85% ukuran asli
         
-        canvasGroup.alpha = 0;
+        // Mulai animasi
         StartCoroutine(AnimasiIntro());
     }
 
-    void SetTeksBerdasarkanScene()
+    void SetSpriteBerdasarkanScene()
     {
         string namaScene = SceneManager.GetActiveScene().name;
-        string namaPermainan = "";
 
-        switch (namaScene)
+        if (introImage != null)
         {
-            case "ujicobascroll": 
-                namaPermainan = "Puzzle Kaimana";
-                break;
-            case "SampleScene": 
-                namaPermainan = "Bo Dawosara Raruko";
-                break;
-            case "Lempar Lembing": 
-                namaPermainan = "Aisoki";
-                break;
-            default:
-                namaPermainan = "Permainan Tradisional";
-                break;
+            switch (namaScene)
+            {
+                case "ujicobascroll": 
+                    introImage.sprite = spritePuzzle != null ? spritePuzzle : spriteDefault;
+                    break;
+                case "SampleScene": 
+                    introImage.sprite = spriteBoDawosara != null ? spriteBoDawosara : spriteDefault;
+                    break;
+                case "Lempar Lembing": 
+                    introImage.sprite = spriteAisoki != null ? spriteAisoki : spriteDefault;
+                    break;
+                default:
+                    introImage.sprite = spriteDefault;
+                    break;
+            }
         }
-
-        if (introText != null) 
-            introText.text = namaPermainan;
     }
 
     IEnumerator AnimasiIntro()
     {
-        // FASE 1: FADE IN
+        // --- FASE 1: FADE IN & POP-UP ---
+        if (appearSound != null) audioSource.PlayOneShot(appearSound);
+        
         float elapsed = 0;
         while (elapsed < fadeInDuration)
         {
             elapsed += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(0, 1, elapsed / fadeInDuration);
+            float t = elapsed / fadeInDuration;
+            float curveValue = popUpCurve.Evaluate(t);
+            
+            // 1. Atur Transparansi
+            canvasGroup.alpha = curveValue;
+            
+            // 2. Atur Skala (Efek memantul / pop-up)
+            float currentScaleMultiplier;
+            if (t < 0.5f) 
+            {
+                // Paruh pertama: membesar melebihi ukuran normal (overshoot)
+                currentScaleMultiplier = Mathf.Lerp(0.85f, popScaleAmount, t * 2f);
+            }
+            else 
+            {
+                // Paruh kedua: kembali ke ukuran normal (1.0)
+                currentScaleMultiplier = Mathf.Lerp(popScaleAmount, 1.0f, (t - 0.5f) * 2f);
+            }
+            
+            transform.localScale = originalScale * currentScaleMultiplier;
             yield return null;
         }
-        canvasGroup.alpha = 1;
+        
+        // Pastikan nilai akhir presisi
+        canvasGroup.alpha = 1f;
+        transform.localScale = originalScale;
 
-        // FASE 2: BERTAHAN
+        // --- FASE 2: BERTAHAN (DISPLAY) ---
         yield return new WaitForSeconds(stayDuration);
 
-        // FASE 3: FADE OUT
+        // --- FASE 3: FADE OUT ---
+        if (disappearSound != null) audioSource.PlayOneShot(disappearSound);
+        
         elapsed = 0;
         while (elapsed < fadeOutDuration)
         {
             elapsed += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(1, 0, elapsed / fadeOutDuration);
+            float t = elapsed / fadeOutDuration;
+            
+            // Fade out (kurva dibalik)
+            canvasGroup.alpha = 1f - popUpCurve.Evaluate(t);
+            
+            // Sedikit mengecil saat hilang untuk efek dramatis yang halus
+            transform.localScale = originalScale * Mathf.Lerp(1.0f, 0.95f, t);
+
             yield return null;
         }
-        canvasGroup.alpha = 0;
+        
+        canvasGroup.alpha = 0f;
+        gameObject.SetActive(false); // Matikan objek agar tidak mengganggu gameplay
 
-        // FASE 4: SELESAI
-        gameObject.SetActive(false);
-
-        // PANGGIL COUNTDOWN JIKA ADA
+        // --- FASE 4: TRIGGER COUNTDOWN ---
         MulaiCountdownJikaAda();
     }
 
     void MulaiCountdownJikaAda()
     {
-        // Cara 1: Jika kamu assign manual di Inspector
         if (countdownObject != null)
         {
-            // Coba cari script countdown di objek tersebut
             var countdownScript = countdownObject.GetComponent<MonoBehaviour>();
-            if (countdownScript != null)
-            {
-                countdownScript.Invoke("MulaiHitungMundur", 0.1f);
-            }
+            if (countdownScript != null) countdownScript.Invoke("MulaiHitungMundur", 0.1f);
         }
         else
         {
-            // Cara 2: Cari otomatis di scene (untuk Level 2)
+            // Fallback: cari otomatis di scene
             var countdownScripts = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None);
             foreach (var script in countdownScripts)
             {
