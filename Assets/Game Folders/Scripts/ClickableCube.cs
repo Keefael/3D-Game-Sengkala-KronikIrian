@@ -40,11 +40,10 @@ public class ClickableCube : MonoBehaviour
     private const float POP_UP_DURATION = 0.4f; 
     private string lastDisplayedNumber = "";    
 
-    // --- VARIABEL FINISH LINE & UI ---
+    // --- VARIABEL FINISH LINE & UI (DIPERBARUI) ---
     [Header("Finish Line & UI Settings")]
-    public GameObject winPanel; 
-    public GameObject winButton;    // Tombol khusus saat Menang
-    public GameObject retryButton;  // Tombol khusus saat Kalah (Retry)
+    public GameObject winPanel;   // Panel khusus desain Menang (berisi tombol Next/Restart)
+    public GameObject losePanel;  // Panel khusus desain Kalah (berisi tombol Restart)
     
     [Header("Bot Settings")]
     public GameObject botBoat; 
@@ -68,10 +67,9 @@ public class ClickableCube : MonoBehaviour
             botController = botBoat.GetComponent<BotController>();
         }
 
-        // --- PASTIKAN PANEL DAN TOMBOL TERSEMBUNYI DI AWAL GAME ---
+        // --- PASTIKAN KEDUA PANEL TERSEMBUNYI DI AWAL GAME ---
         if (winPanel != null) winPanel.SetActive(false);
-        if (winButton != null) winButton.SetActive(false);
-        if (retryButton != null) retryButton.SetActive(false);
+        if (losePanel != null) losePanel.SetActive(false);
         // ----------------------------------------------------------
 
         StartCountdown();
@@ -252,18 +250,9 @@ public class ClickableCube : MonoBehaviour
     {
         EndRace(); 
         
-        if (winPanel != null)
-        {
-            TextMeshProUGUI panelText = winPanel.GetComponentInChildren<TextMeshProUGUI>();
-            if (panelText != null) panelText.text = "SELAMAT! ANDA MENANG!";
-            
-            winPanel.SetActive(true);
-            
-            // --- ATUR VISIBILITAS TOMBOL SAAT MENANG ---
-            if (winButton != null) winButton.SetActive(true);
-            if (retryButton != null) retryButton.SetActive(false);
-            // --------------------------------------------
-        }
+        // Nyalakan panel Menang, matikan panel Kalah
+        if (winPanel != null) winPanel.SetActive(true);
+        if (losePanel != null) losePanel.SetActive(false);
         
         Debug.Log("🏆 FINISH! Player Wins!");
     }
@@ -271,20 +260,14 @@ public class ClickableCube : MonoBehaviour
     // --- FUNGSI DIPANGGIL BOT SAAT BOT MENANG ---
     public void TriggerLosePanel()
     {
+        // GUARD CLAUSE: Mencegah bug jika player sudah finish lebih dulu
+        if (isRaceFinished) return;
+
         EndRace(); 
         
-        if (winPanel != null)
-        {
-            TextMeshProUGUI panelText = winPanel.GetComponentInChildren<TextMeshProUGUI>();
-            if (panelText != null) panelText.text = "YAHH... KAMU KALAH!";
-            
-            winPanel.SetActive(true);
-            
-            // --- ATUR VISIBILITAS TOMBOL SAAT KALAH ---
-            if (winButton != null) winButton.SetActive(false);
-            if (retryButton != null) retryButton.SetActive(true);
-            // -------------------------------------------
-        }
+        // Nyalakan panel Kalah, matikan panel Menang
+        if (losePanel != null) losePanel.SetActive(true);
+        if (winPanel != null) winPanel.SetActive(false);
         
         Debug.Log("💀 FINISH! Bot Wins!");
     }
