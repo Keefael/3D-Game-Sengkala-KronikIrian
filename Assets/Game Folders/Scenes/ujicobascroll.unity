@@ -2670,7 +2670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 483480620}
-  btnContinue: {fileID: 0}
+  btnContinue: {fileID: 1901835641}
   timerCtrl: {fileID: 0}
   allPieces: []
 --- !u!4 &729327919
@@ -7584,8 +7584,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resultText: {fileID: 0}
-  btnNextLevel: {fileID: 0}
-  btnRestart: {fileID: 0}
+  btnNextLevel: {fileID: 1801408371}
+  btnRestart: {fileID: 523473324}
   currentLevelIndex: 2
 --- !u!4 &2110337716
 Transform:
