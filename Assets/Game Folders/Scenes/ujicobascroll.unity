@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 51869345}
   m_Layer: 5
   m_Name: Image (23)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -492,8 +492,9 @@ GameObject:
   - component: {fileID: 126052850}
   - component: {fileID: 126052854}
   - component: {fileID: 126052853}
-  - component: {fileID: 126052852}
   - component: {fileID: 126052851}
+  - component: {fileID: 126052855}
+  - component: {fileID: 126052856}
   m_Layer: 5
   m_Name: PiecesContent
   m_TagString: Untagged
@@ -539,9 +540,9 @@ RectTransform:
   - {fileID: 1055002678}
   m_Father: {fileID: 1658943643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 152.39, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000015258789, y: 11904.501}
   m_SizeDelta: {x: 654.7753, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &126052851
@@ -558,30 +559,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &126052852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126052849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 10
-    m_Right: 10
-    m_Top: 20
-    m_Bottom: 20
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 300, y: 300}
-  m_Spacing: {x: 10, y: 50}
-  m_Constraint: 1
-  m_ConstraintCount: 1
 --- !u!114 &126052853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,6 +597,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126052849}
   m_CullTransparentMesh: 1
+--- !u!114 &126052855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126052849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355c46bb878ce6e478c3a25aa4e99e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotsParent: {fileID: 969965971}
+  spacing: 100
+  padding: 10
+  sizeMultiplier: 1
+  showDebugLog: 1
+--- !u!114 &126052856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126052849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 10
+    m_Right: 10
+    m_Top: 10
+    m_Bottom: 10
+  m_ChildAlignment: 0
+  m_Spacing: 50
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &138294125
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +654,7 @@ GameObject:
   - component: {fileID: 138294129}
   m_Layer: 5
   m_Name: Image (4)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -860,7 +880,7 @@ GameObject:
   - component: {fileID: 156353985}
   m_Layer: 5
   m_Name: Image (10)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1410,7 +1430,7 @@ GameObject:
   - component: {fileID: 273002425}
   m_Layer: 5
   m_Name: Image (9)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3053,7 +3073,7 @@ GameObject:
   - component: {fileID: 754961785}
   m_Layer: 5
   m_Name: Image (1)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3457,7 +3477,7 @@ GameObject:
   - component: {fileID: 801221533}
   m_Layer: 5
   m_Name: Image (11)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3547,7 +3567,7 @@ GameObject:
   - component: {fileID: 927988228}
   m_Layer: 5
   m_Name: Image (18)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3637,7 +3657,7 @@ GameObject:
   - component: {fileID: 944465003}
   m_Layer: 5
   m_Name: Image (3)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3727,7 +3747,7 @@ GameObject:
   - component: {fileID: 944617318}
   m_Layer: 5
   m_Name: Image (15)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4076,7 +4096,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2117163480}
         m_TargetAssemblyTypeName: PieceScroller, Assembly-CSharp
-        m_MethodName: ScrollDown
+        m_MethodName: ScrollUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4622,7 +4642,7 @@ GameObject:
   - component: {fileID: 1198862263}
   m_Layer: 5
   m_Name: Image (21)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4822,7 +4842,7 @@ GameObject:
   - component: {fileID: 1276816332}
   m_Layer: 5
   m_Name: Image (16)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5001,7 +5021,7 @@ GameObject:
   - component: {fileID: 1322733219}
   m_Layer: 5
   m_Name: Image (19)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5255,7 +5275,7 @@ GameObject:
   - component: {fileID: 1371870365}
   m_Layer: 5
   m_Name: Image (22)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5345,7 +5365,7 @@ GameObject:
   - component: {fileID: 1436759776}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5435,7 +5455,7 @@ GameObject:
   - component: {fileID: 1439371150}
   m_Layer: 5
   m_Name: Image (2)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5525,7 +5545,7 @@ GameObject:
   - component: {fileID: 1487317353}
   m_Layer: 5
   m_Name: Image (6)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5615,7 +5635,7 @@ GameObject:
   - component: {fileID: 1495880689}
   m_Layer: 5
   m_Name: Image (17)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5705,7 +5725,7 @@ GameObject:
   - component: {fileID: 1599988514}
   m_Layer: 5
   m_Name: Image (7)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5975,7 +5995,7 @@ GameObject:
   - component: {fileID: 1665091144}
   m_Layer: 5
   m_Name: Image (13)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6287,7 +6307,7 @@ GameObject:
   - component: {fileID: 1705221575}
   m_Layer: 5
   m_Name: Image (5)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6719,7 +6739,7 @@ GameObject:
   - component: {fileID: 1880802709}
   m_Layer: 5
   m_Name: Image (14)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7209,7 +7229,7 @@ GameObject:
   - component: {fileID: 1993108809}
   m_Layer: 5
   m_Name: Image (20)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7388,7 +7408,7 @@ GameObject:
   - component: {fileID: 2061694212}
   m_Layer: 5
   m_Name: Image (12)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7478,7 +7498,7 @@ GameObject:
   - component: {fileID: 2103579212}
   m_Layer: 5
   m_Name: Image (8)
-  m_TagString: Untagged
+  m_TagString: PuzzleSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7811,7 +7831,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2117163480}
         m_TargetAssemblyTypeName: PieceScroller, Assembly-CSharp
-        m_MethodName: ScrollUp
+        m_MethodName: ScrollDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

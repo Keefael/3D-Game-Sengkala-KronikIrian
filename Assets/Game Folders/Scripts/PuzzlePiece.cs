@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
-public class PuzzlePiece : MonoBehaviour, IPointerClickHandler
+public class PuzzlePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("Identitas Piece")]
     public int pieceId;
@@ -12,85 +12,150 @@ public class PuzzlePiece : MonoBehaviour, IPointerClickHandler
     private Image imageComponent;
     private RectTransform rectTransform;
     private Color originalColor;
+    private CanvasGroup canvasGroup;
+
+    private Transform originalParent;
+    private Vector2 originalAnchoredPosition;
+    private int originalSiblingIndex;
+    
+    // ✅ BARU: Simpan offset antara posisi piece dan posisi mouse saat mulai drag
+    private Vector2 dragOffset;
 
     void Awake()
     {
         imageComponent = GetComponent<Image>();
         rectTransform = GetComponent<RectTransform>();
         originalColor = imageComponent.color;
+
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnBeginDrag(PointerEventData eventData)
     {
         if (isSnapped) return;
-        
-        PuzzleManager.Instance.SelectPiece(this);
-    }
 
-    public void Select()
-    {
-        imageComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0.5f);
+        originalParent = transform.parent;
+        originalAnchoredPosition = rectTransform.anchoredPosition;
+        originalSiblingIndex = transform.GetSiblingIndex();
+
+        Canvas canvas = GetComponentInParent<Canvas>();
+        transform.SetParent(canvas.transform, true);
+
+        canvasGroup.blocksRaycasts = false;
+        transform.SetAsLastSibling();
+
+        // ✅ BARU: Hitung offset antara posisi mouse dengan posisi piece saat ini
+        // Ini yang membuat piece menempel sempurna di jari/mouse
+        Vector2 mouseLocalPos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            (RectTransform)transform.parent,
+            eventData.position,
+            eventData.pressEventCamera,
+            out mouseLocalPos);
+        
+        dragOffset = rectTransform.anchoredPosition - mouseLocalPos;
+
+        // Efek visual saat diangkat
         transform.localScale = Vector3.one * 1.1f;
+        imageComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0.9f);
     }
 
-    public void Deselect()
+    public void OnDrag(PointerEventData eventData)
     {
-        imageComponent.color = originalColor;
+        if (isSnapped) return;
+
+        Vector2 mouseLocalPos;
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            (RectTransform)transform.parent,
+            eventData.position,
+            eventData.pressEventCamera,
+            out mouseLocalPos))
+        {
+            // ✅ PERBAIKAN: Tambahkan offset agar piece tidak melompat ke posisi mouse
+            rectTransform.anchoredPosition = mouseLocalPos + dragOffset;
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (isSnapped) return;
+
+        canvasGroup.blocksRaycasts = true;
         transform.localScale = Vector3.one;
+        imageComponent.color = originalColor;
+
+        GameObject dropTarget = eventData.pointerCurrentRaycast.gameObject;
+
+        if (dropTarget != null && dropTarget.CompareTag("PuzzleSlot"))
+        {
+            PuzzleSlot targetSlot = dropTarget.GetComponent<PuzzleSlot>();
+            
+            if (targetSlot != null && !targetSlot.isFilled && targetSlot.slotId == this.pieceId)
+            {
+                SnapToSlot(dropTarget.transform);
+                return; 
+            }
+        }
+
+        StartCoroutine(FlyBackToOriginal());
     }
 
-    public IEnumerator FlyToSlot(Transform targetSlot, System.Action onComplete)
+    private IEnumerator FlyBackToOriginal()
     {
-        // Pindah parent ke Canvas root
-        RectTransform canvasRect = GetComponentInParent<Canvas>().transform as RectTransform;
-        transform.SetParent(canvasRect, false);
+        transform.SetParent(originalParent, true);
+        Vector3 targetWorldPos = transform.position;
+        
+        rectTransform.anchoredPosition = originalAnchoredPosition;
+        Vector3 startWorldPos = transform.position;
 
-        Vector3 startPos = transform.position;
-        Vector3 endPos = targetSlot.position;
-        
-        // ✅ Ambil ukuran slot target
-        RectTransform targetRectTransform = targetSlot.GetComponent<RectTransform>();
-        Vector2 startSize = rectTransform.sizeDelta;
-        Vector2 targetSize = targetRectTransform.sizeDelta;
-        
-        float duration = 0.3f;
+        Canvas canvas = GetComponentInParent<Canvas>();
+        transform.SetParent(canvas.transform, true);
+        transform.SetAsFirstSibling();
+
+        float duration = 0.25f;
         float elapsed = 0f;
 
-        // Animasi terbang + resize
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-            float smoothT = Mathf.SmoothStep(0, 1, t);
-            
-            // Animasi posisi
-            transform.position = Vector3.Lerp(startPos, endPos, smoothT);
-            
-            // ✅ Animasi ukuran (resize)
-            rectTransform.sizeDelta = Vector2.Lerp(startSize, targetSize, smoothT);
-            
+            float t = Mathf.SmoothStep(0, 1, elapsed / duration);
+            transform.position = Vector3.Lerp(startWorldPos, targetWorldPos, t);
             yield return null;
         }
 
-        // Pastikan posisi dan ukuran pas di akhir
-        transform.position = endPos;
-        rectTransform.sizeDelta = targetSize;
+        transform.SetParent(originalParent, false);
+        rectTransform.anchoredPosition = originalAnchoredPosition;
+        transform.SetSiblingIndex(originalSiblingIndex);
         
-        if (onComplete != null) onComplete();
+        canvasGroup.blocksRaycasts = true;
+        imageComponent.color = originalColor;
     }
 
     public void SnapToSlot(Transform slotParent)
     {
         isSnapped = true;
         
-        // ✅ Pastikan ukuran match dengan slot parent
         RectTransform parentRect = slotParent.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = parentRect.sizeDelta;
+        if (parentRect != null)
+        {
+            rectTransform.sizeDelta = parentRect.sizeDelta;
+        }
         
-        // Parent-kan ke slot
-        transform.SetParent(slotParent);
+        transform.SetParent(slotParent, false);
         transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
         transform.localScale = Vector3.one;
         imageComponent.color = originalColor;
+
+        slotParent.GetComponent<PuzzleSlot>().isFilled = true;
+
+        if (PuzzleManager.Instance != null)
+        {
+            PuzzleManager.Instance.OnPieceSnapped();
+        }
     }
 }

@@ -1,27 +1,34 @@
 using UnityEngine;
-using TMPro; // ✅ Menggunakan TextMeshPro
+using TMPro; 
 
 public class PuzzleManager : MonoBehaviour
 {
     public static PuzzleManager Instance;
 
     [Header("Pengaturan Game")]
-    public int totalPieces = 24; // Total pieces yang harus dipasang
+    public int totalPieces = 24; // Total pieces yang harus dipasang (Sesuaikan dengan jumlah di scene)
     public float gameTime = 120f; // Waktu dalam detik (misal 120 detik = 2 menit)
 
     [Header("UI References (Drag dari Inspector)")]
-    public TextMeshProUGUI timerText; // ✅ Tipe data untuk TextMeshPro UI
+    public TextMeshProUGUI timerText; // Tipe data untuk TextMeshPro UI
     public GameObject winPanel;       // Panel Menang
     public GameObject losePanel;      // Panel Kalah
 
-    private PuzzlePiece selectedPiece;
     private int snappedCount = 0;
     private float currentTime;
     private bool isGameActive = true;
 
     void Awake()
     {
-        Instance = this;
+        // Singleton pattern
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
@@ -61,41 +68,15 @@ public class PuzzleManager : MonoBehaviour
         }
     }
 
-    // --- Logika Select/Deselect Piece ---
-    public void SelectPiece(PuzzlePiece piece)
-    {
-        if (!isGameActive) return; // Tidak bisa pilih piece jika game selesai
-
-        if (selectedPiece != null && selectedPiece != piece)
-        {
-            selectedPiece.Deselect();
-        }
-
-        selectedPiece = piece;
-        piece.Select();
-    }
-
-    public void Deselect()
-    {
-        if (selectedPiece != null)
-        {
-            selectedPiece.Deselect();
-            selectedPiece = null;
-        }
-    }
-
-    public PuzzlePiece GetSelectedPiece()
-    {
-        return selectedPiece;
-    }
-
-    // --- LOGIKA: Dipanggil saat piece berhasil snap ---
+    // --- LOGIKA: Dipanggil oleh PuzzlePiece saat berhasil snap ---
     public void OnPieceSnapped()
     {
         if (!isGameActive) return;
 
         snappedCount++;
         Debug.Log($"Pieces terpasang: {snappedCount} / {totalPieces}");
+
+        // Opsional: Tambahkan efek suara 'pop' atau 'klik' di sini
 
         // Cek jika semua pieces sudah terpasang
         if (snappedCount >= totalPieces)
@@ -107,7 +88,7 @@ public class PuzzleManager : MonoBehaviour
     // --- Logika Menang / Kalah ---
     void GameOver(bool isWin)
     {
-        isGameActive = false; // Hentikan game
+        isGameActive = false; // Hentikan game dan timer
 
         if (isWin)
         {
@@ -119,5 +100,11 @@ public class PuzzleManager : MonoBehaviour
             Debug.Log("WAKTU HABIS! KAMU KALAH.");
             if (losePanel != null) losePanel.SetActive(true);
         }
+    }
+
+    // --- Method Tambahan untuk Tombol UI (Opsional) ---
+    public void RestartLevel()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }
